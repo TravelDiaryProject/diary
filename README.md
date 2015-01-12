@@ -1,2 +1,1 @@
 Travel Diary Project Readme.
-
