@@ -14,7 +14,7 @@
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="css/carousel.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
 </head>
 <!-- NAVBAR
 ================================================== -->
@@ -52,6 +52,11 @@
     <h1>Name of trip</h1>
     <button type="button" class="btn btn-success">Add photo</button>
     <hr/>
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="map-canvas" class="trip-map"></div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
@@ -106,5 +111,16 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="js/bootstrap/bootstrap.min.js"></script>
+<script src="js/libs/class.min.js"></script>
+<script src="js/global.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmpevwBW8VxwAXPnBTsDisblO5CA7Cd9A"></script>
+    <script>
+        var places = [
+            ['51.3371273', '5.405253200000061'],
+            ['52.3371273', '5.405253200000061'],
+            ['53.3371273', '5.405253200000061']
+        ];
+        var TripMap = new Cl.Map(places);
+    </script>
 </body>
 </html>
