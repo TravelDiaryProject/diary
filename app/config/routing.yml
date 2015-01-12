@@ -1,5 +1,12 @@
-td_user:
-    resource: "@TDUserBundle/Resources/config/routing.yml"
+td_dashboard:
+    resource: "@TDDashboardBundle/Resources/config/routing.yml"
     prefix:   /
+
+td_user:
+    resource: "@FOSUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
 

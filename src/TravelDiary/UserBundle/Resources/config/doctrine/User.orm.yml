@@ -1,0 +1,10 @@
+TravelDiary\UserBundle\Entity\User:
+    type:  entity
+    table: fos_user
+    id:
+        id:
+            type: integer
+            options:
+                unsigned: true
+            generator:
+                strategy: AUTO
