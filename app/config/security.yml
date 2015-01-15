@@ -29,6 +29,5 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/diary, role: ROLE_ADMIN }
-        - { path: ^/, role: ROLE_USER }
+        - { path: ^/trip, role: ROLE_USER }
 
