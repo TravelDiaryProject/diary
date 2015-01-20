@@ -1,3 +1,0 @@
-td_trip_homepage:
-    path:     /trip
-    defaults: { _controller: TDTripBundle:Front:index }

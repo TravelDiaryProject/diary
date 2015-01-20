@@ -1,6 +1,6 @@
 <?php
 
-namespace TravelDiary\TipBundle;
+namespace TravelDiary\TripBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

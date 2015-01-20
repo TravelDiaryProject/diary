@@ -1,0 +1,36 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<h1>Trip creation</h1>
+<div class="container">
+    <h1>Create new trip</h1>
+    <hr/>
+    <div class="row">
+        <div class="col-lg-12">
+            {{ form_errors(form) }}
+            {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_label(form.title, 'Title') }}
+                    {{ form_widget(form.title, {'attr' : {'class' : 'form-control', 'placeholder': "Title"}}) }}
+
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description, {'attr' : {'class' : 'form-control', 'placeholder': "Description"}}) }}
+
+                    {{ form_label(form.file) }}
+                    {{ form_widget(form.file) }}
+                </div>
+                {{ form_row(form.submit, {'attr' : {'class' : 'btn btn-default'}}) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+    <hr/>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('trip') }}">
+                Back to the list
+            </a>
+        </li>
+    </ul>
+</div>
+{% endblock %}

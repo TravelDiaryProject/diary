@@ -1,4 +1,4 @@
 services:
 #    td_trip.example:
-#        class: TravelDiary\TipBundle\Example
+#        class: TravelDiary\TripBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]

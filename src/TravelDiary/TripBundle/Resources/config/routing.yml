@@ -1,0 +1,7 @@
+td_trip_homepage:
+    path:     /
+    defaults: { _controller: TDTripBundle:Front:index }
+
+td_trip:
+    resource: "@TDTripBundle/Resources/config/routing/trip.yml"
+    prefix:   /

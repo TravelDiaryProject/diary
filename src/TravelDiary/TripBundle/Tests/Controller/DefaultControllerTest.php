@@ -1,6 +1,6 @@
 <?php
 
-namespace TravelDiary\TipBundle\Tests\Controller;
+namespace TravelDiary\TripBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

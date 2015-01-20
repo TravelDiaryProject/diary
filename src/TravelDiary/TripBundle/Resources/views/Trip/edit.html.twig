@@ -1,0 +1,36 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h1>Edit trip</h1>
+    <hr/>
+    <div class="row">
+        <div class="col-lg-12">
+            {{ form_errors(edit_form) }}
+            {{ form_start(edit_form) }}
+            <div class="form-group">
+                {{ form_label(edit_form.title, 'Title') }}
+                {{ form_widget(edit_form.title, {'attr' : {'class' : 'form-control', 'placeholder': "Title"}}) }}
+
+                {{ form_label(edit_form.description) }}
+                {{ form_widget(edit_form.description, {'attr' : {'class' : 'form-control', 'placeholder': "Description"}}) }}
+
+                {{ form_label(edit_form.file) }}
+                {{ form_widget(edit_form.file) }}
+            </div>
+            {{ form_row(edit_form.submit, {'attr' : {'class' : 'btn btn-default' }}) }}
+            {{ form_end(edit_form) }}
+        </div>
+    </div>
+    <hr/>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('trip') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+</div>
+{% endblock %}

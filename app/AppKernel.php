@@ -19,7 +19,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new TravelDiary\UserBundle\TDUserBundle(),
             new TravelDiary\DashboardBundle\TDDashboardBundle(),
-            new TravelDiary\TipBundle\TDTripBundle(),
+            new TravelDiary\TripBundle\TDTripBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

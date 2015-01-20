@@ -1,0 +1,30 @@
+trip:
+    path:     /list
+    defaults: { _controller: "TDTripBundle:Trip:index" }
+
+trip_show:
+    path:     /{id}/show
+    defaults: { _controller: "TDTripBundle:Trip:show" }
+
+trip_new:
+    path:     /new
+    defaults: { _controller: "TDTripBundle:Trip:new" }
+
+trip_create:
+    path:     /create
+    defaults: { _controller: "TDTripBundle:Trip:create" }
+    requirements: { _method: post }
+
+trip_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "TDTripBundle:Trip:edit" }
+
+trip_update:
+    path:     /{id}/update
+    defaults: { _controller: "TDTripBundle:Trip:update" }
+    requirements: { _method: post|put }
+
+trip_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "TDTripBundle:Trip:delete" }
+    requirements: { _method: post|delete }

@@ -1,6 +1,6 @@
 <?php
 
-namespace TravelDiary\TipBundle\DependencyInjection;
+namespace TravelDiary\TripBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

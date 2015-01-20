@@ -1,0 +1,16 @@
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+    <a href="{{ path('fos_user_security_logout') }}">
+        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+    </a>
+{% else %}
+    <form class="navbar-form navbar-right" action="{{ path("fos_user_security_check") }}" method="post">
+        <div class="form-group">
+            <input type="text" placeholder="{{ 'security.login.username'|trans }}" class="form-control" name="_username" required>
+        </div>
+        <div class="form-group">
+            <input type="password" placeholder="{{ 'security.login.password'|trans }}" class="form-control" name="_password" required>
+        </div>
+        <button type="submit" class="btn btn-success" name="_submit">{{ 'security.login.submit'|trans }}</button>
+    </form>
+{% endif %}

@@ -7,7 +7,7 @@
 
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
-            <link href="{{ asset('css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('assets/css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
@@ -32,16 +32,7 @@
                                 <li><a href="#about">About</a></li>
                                 <li><a href="#contact">Contact</a></li>
                             </ul>
-                            <form class="navbar-form navbar-right">
-                                {{ block('fos_user_content') }}
-                                <div class="form-group">
-                                    <input type="text" placeholder="Email" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" placeholder="Password" class="form-control" required>
-                                </div>
-                                <button type="submit" class="btn btn-success">Sign in</button>
-                            </form>
+                            {% include ('::login_form.html.twig') %}
                         </div>
                     </div>
                 </nav>
@@ -49,14 +40,17 @@
             </div>
         </div>
         {% block body %}{% endblock %}
-        <footer>
-            <p class="pull-right"><a href="#">Back to top</a></p>
-            <p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-        </footer>
+        <div class="container">
+            <footer>
+                <p class="pull-right"><a href="#">Back to top</a></p>
+                <p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+            </footer>
+        </div>
+
 
         {% block javascripts %}
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-            <script src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('assets/js/bootstrap/bootstrap.min.js') }}"></script>
         {% endblock %}
     </body>
 </html>

@@ -1,6 +1,6 @@
 td_trip:
     resource: "@TDTripBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /trip
 
 td_dashboard:
     resource: "@TDDashboardBundle/Resources/config/routing.yml"

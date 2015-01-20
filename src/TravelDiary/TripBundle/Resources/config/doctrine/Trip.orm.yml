@@ -1,0 +1,40 @@
+TravelDiary\TripBundle\Entity\Trip:
+    type: entity
+    table: trip
+    repositoryClass: TravelDiary\TripBundle\Entity\TripRepository
+    id:
+        id:
+            type: bigint
+            options:
+                unsigned: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: false
+        description:
+            type: string
+            length: 255
+            nullable: false
+        startDate:
+            type: datetime
+            nullable: true
+            column: start_date
+        photo:
+            type: string
+            nullable: true
+    manyToOne:
+        user:
+            targetEntity: TravelDiary\UserBundle\Entity\User
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+    lifecycleCallbacks:
+        prePersist: [ preUpload, bindDate ]
+        preUpdate: [ preUpload, bindDate ]
+        postPersist: [ upload ]
+        postUpdate: [ upload ]
+        postRemove: [removeUpload]
+
