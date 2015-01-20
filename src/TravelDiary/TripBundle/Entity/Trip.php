@@ -102,7 +102,8 @@ class Trip
     {
         return null === $this->photo
             ? null
-            : $this->getUploadRootDir().'/'.$this->photo;
+            : $this->getUploadRootDir() .
+              DIRECTORY_SEPARATOR . $this->getUser()->getUsername() . DIRECTORY_SEPARATOR . $this->photo;
     }
 
     public function getWebPath()
