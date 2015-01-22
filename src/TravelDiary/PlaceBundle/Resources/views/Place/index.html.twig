@@ -34,9 +34,9 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmpevwBW8VxwAXPnBTsDisblO5CA7Cd9A"></script>
     <script>
         var places = [
-            ['51.3371273', '5.405253200000061'],
-            ['52.3371273', '5.405253200000061'],
-            ['53.3371273', '5.405253200000061']
+            {% for entity in entities %}
+                ['{{ entity.latitude }}', '{{ entity.longitude }}']
+            {% endfor %}
         ];
         var TripMap = new Cl.Map(places);
     </script>
