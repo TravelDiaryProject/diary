@@ -306,6 +306,17 @@ class Place
         // if there is an error when moving the file, an exception will
         // be automatically thrown by move(). This will properly prevent
         // the entity from being persisted to the database on error
+        $reader = \PHPExif\Reader::factory(\PHPExif\Reader::TYPE_NATIVE);
+
+        // reader with Exiftool adapter
+        //$reader = \PHPExif\Reader::factory(\PHPExif\Reader::TYPE_EXIFTOOL);
+
+        $exif = $reader->getExifFromFile($this->getFile()->getPathname());
+
+        print_r($exif);
+        die();
+
+
         $this->getFile()->move(
             $this->getUploadRootDir(),
             $this->photo
