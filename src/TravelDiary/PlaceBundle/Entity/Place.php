@@ -313,10 +313,10 @@ class Place
 
         //$exif = $reader->getExifFromFile($this->getFile()->getPathname());
 
-        list($lat, $log) = $this->read_gps_location($this->getFile()->getPathname());
+        $geo = $this->read_gps_location($this->getFile()->getPathname());
 
-        $this->setLatitude($lat);
-        $this->setLongitude($log);
+        $this->setLatitude($geo['lat']);
+        $this->setLongitude($geo['lng']);
 
         $this->getFile()->move(
             $this->getUploadRootDir(),
