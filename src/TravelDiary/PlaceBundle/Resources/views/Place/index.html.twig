@@ -33,14 +33,12 @@
     {{ parent() }}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmpevwBW8VxwAXPnBTsDisblO5CA7Cd9A"></script>
     <script>
-        var places = [
+        var places = [];
             {% for entity in entities %}
                 {% if entity.latitude %}
-                    ['{{ entity.latitude }}', '{{ entity.longitude }}'],
+                    places.push(['{{ entity.latitude }}', '{{ entity.longitude }}']);
                 {% endif %}
             {% endfor %}
-            ['51.3371273', '5.405253200000061']
-        ];
         var TripMap = new Cl.Map(places);
     </script>
 {% endblock %}
