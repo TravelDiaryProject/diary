@@ -1,0 +1,28 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h1>{{ trip.title }}</h1>
+    <a href="{{ path('trip_place_new', { tripId : tripId }) }}" class="btn btn-success">Add photo</a>
+    <hr/>
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="map-canvas" class="trip-map"></div>
+        </div>
+    </div>
+    <div class="row">
+        {% for entity in entities %}
+            <div class="col-sm-6 col-md-3">
+                <div class="thumbnail">
+                    <img src="/{{ entity.webPath }}" />
+                    <div class="caption">
+                        <h3>{{ entity.title }}</h3>
+                        <p><a href="{{ path('trip_place_edit', { 'id': entity.id, 'tripId' : tripId }) }}" class="btn btn-default" role="button">Edit</a></p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <hr/>
+</div>
+{% endblock %}

@@ -96,8 +96,6 @@ class Trip
         return $this->photo;
     }
 
-    public $path;
-
     public function getAbsolutePath()
     {
         return null === $this->photo
@@ -156,7 +154,7 @@ class Trip
         // check if we have an old image
         if (isset($this->temp) && file_exists($this->getUploadRootDir().'/'.$this->temp)) {
             // delete the old image
-            unlink($this->getUploadRootDir().'/'.$this->temp);
+            //unlink($this->getUploadRootDir().'/'.$this->temp);
             // clear the temp image path
             $this->temp = null;
         }
@@ -261,5 +259,13 @@ class Trip
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 }

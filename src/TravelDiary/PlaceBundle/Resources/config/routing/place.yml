@@ -1,0 +1,30 @@
+trip_place:
+    path:     /
+    defaults: { _controller: "TDPlaceBundle:Place:index" }
+
+trip_place_show:
+    path:     /{id}/show
+    defaults: { _controller: "TDPlaceBundle:Place:show" }
+
+trip_place_new:
+    path:     /new
+    defaults: { _controller: "TDPlaceBundle:Place:new" }
+
+trip_place_create:
+    path:     /create
+    defaults: { _controller: "TDPlaceBundle:Place:create" }
+    requirements: { _method: post }
+
+trip_place_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "TDPlaceBundle:Place:edit" }
+
+trip_place_update:
+    path:     /{id}/update
+    defaults: { _controller: "TDPlaceBundle:Place:update" }
+    requirements: { _method: post|put }
+
+trip_place_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "TDPlaceBundle:Place:delete" }
+    requirements: { _method: post|delete }

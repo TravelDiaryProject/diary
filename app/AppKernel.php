@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new TravelDiary\UserBundle\TDUserBundle(),
             new TravelDiary\DashboardBundle\TDDashboardBundle(),
             new TravelDiary\TripBundle\TDTripBundle(),
+            new TravelDiary\PlaceBundle\TDPlaceBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

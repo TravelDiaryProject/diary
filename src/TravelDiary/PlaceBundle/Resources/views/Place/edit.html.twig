@@ -1,0 +1,25 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h1>Add photo</h1>
+    <hr/>
+    <div class="row">
+        <div class="col-lg-12">
+            {{ form_start(edit_form, { 'action' : path('trip_place_update', { tripId : tripId, id: entity.id }) }) }}
+            <div class="form-group">
+                {{ form_label(edit_form.file, 'File input') }}
+                {{ form_widget(edit_form.file) }}
+                <p class="help-block">Choose your photo.</p>
+            </div>
+            {{ form_row(edit_form.submit, {'attr' : {'class' : 'btn btn-default'}}) }}
+            {{ form_end(edit_form) }}
+        </div>
+    </div>
+    <hr/>
+    <a href="{{ path('trip_place', { tripId : tripId }) }}">
+        Back to the list
+    </a>
+    {{ form(delete_form) }}
+</div>
+{% endblock %}

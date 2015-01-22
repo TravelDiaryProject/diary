@@ -1,3 +1,7 @@
+td_place:
+    resource: "@TDPlaceBundle/Resources/config/routing.yml"
+    prefix:   /
+
 td_trip:
     resource: "@TDTripBundle/Resources/config/routing.yml"
     prefix:   /trip

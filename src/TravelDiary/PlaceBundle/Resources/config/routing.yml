@@ -1,0 +1,7 @@
+td_place_trip_place:
+    resource: "@TDPlaceBundle/Resources/config/routing/place.yml"
+    prefix:   /trip/{tripId}/place
+
+td_place_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: TDPlaceBundle:Default:index }

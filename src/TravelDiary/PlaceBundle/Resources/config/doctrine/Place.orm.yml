@@ -1,0 +1,51 @@
+TravelDiary\PlaceBundle\Entity\Place:
+    type: entity
+    table: place
+    repositoryClass: TravelDiary\PlaceBundle\Entity\PlaceRepository
+    id:
+        id:
+            type: bigint
+            options:
+                unsigned: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+        description:
+            type: string
+            length: 255
+            nullable: true
+        createdAt:
+            type: datetime
+            nullable: true
+            column: created_at
+        photo:
+            type: string
+            nullable: true
+        longitude:
+            type: string
+            nullable: true
+        latitude:
+            type: string
+            nullable: true
+    manyToOne:
+        user:
+            targetEntity: TravelDiary\UserBundle\Entity\User
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+        trip:
+            targetEntity: TravelDiary\TripBundle\Entity\Trip
+            joinColumns:
+                trip_id:
+                    referencedColumnName: id
+    lifecycleCallbacks:
+        prePersist: [ preUpload, bindDate ]
+        preUpdate: [ preUpload, bindDate ]
+        postPersist: [ upload ]
+        postUpdate: [ upload ]
+        preRemove: [removeUpload]
+
