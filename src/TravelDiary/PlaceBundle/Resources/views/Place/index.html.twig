@@ -35,8 +35,11 @@
     <script>
         var places = [
             {% for entity in entities %}
-                ['{{ entity.latitude }}', '{{ entity.longitude }}']
+                {% if entity.latitude %}
+                    ['{{ entity.latitude }}', '{{ entity.longitude }}'],
+                {% endif %}
             {% endfor %}
+            []
         ];
         var TripMap = new Cl.Map(places);
     </script>

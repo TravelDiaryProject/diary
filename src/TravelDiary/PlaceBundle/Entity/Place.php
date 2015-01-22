@@ -371,7 +371,10 @@ class Place
                 );
             }
         }
-        return false;
+        return array(
+            'lat' => '',
+            'lng' => ''
+        );
     }
 
     private $temp;
