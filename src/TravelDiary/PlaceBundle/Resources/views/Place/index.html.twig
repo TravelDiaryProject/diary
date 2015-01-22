@@ -1,5 +1,8 @@
 {% extends '::base.html.twig' %}
-
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
+{% endblock %}
 {% block body %}
 <div class="container">
     <h1>{{ trip.title }}</h1>
@@ -25,4 +28,16 @@
     </div>
     <hr/>
 </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmpevwBW8VxwAXPnBTsDisblO5CA7Cd9A"></script>
+    <script>
+        var places = [
+            ['51.3371273', '5.405253200000061'],
+            ['52.3371273', '5.405253200000061'],
+            ['53.3371273', '5.405253200000061']
+        ];
+        var TripMap = new Cl.Map(places);
+    </script>
 {% endblock %}
