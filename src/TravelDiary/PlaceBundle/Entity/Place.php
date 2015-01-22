@@ -313,11 +313,6 @@ class Place
 
         //$exif = $reader->getExifFromFile($this->getFile()->getPathname());
 
-        $geo = $this->read_gps_location($this->getFile()->getPathname());
-
-        $this->setLatitude($geo['lat']);
-        $this->setLongitude($geo['lng']);
-
         $this->getFile()->move(
             $this->getUploadRootDir(),
             $this->photo
@@ -403,6 +398,11 @@ class Place
             // do whatever you want to generate a unique name
             $filename = sha1(uniqid(mt_rand(), true));
             $this->photo = $filename.'.'.$this->getFile()->guessExtension();
+
+            $geo = $this->read_gps_location($this->getFile()->getPathname());
+
+            $this->setLatitude($geo['lat']);
+            $this->setLongitude($geo['lng']);
         }
     }
 
