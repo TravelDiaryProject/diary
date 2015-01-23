@@ -9,7 +9,7 @@
             {% for entity in entities %}
                 <div class="col-sm-6 col-md-3">
                     <div class="thumbnail">
-                        <a href="{{ path('trip_place', { 'tripId': entity.id }) }}" class="thumbnail"><img src="/uploads/trip/{{ app.user.username }}/{{ entity.photo }}"></a>
+                        <a href="{{ path('trip_place', { 'tripId': entity.id }) }}" class="thumbnail"><img src="/{{ entity.webPath }}"></a>
                         <div class="caption">
                             <h3>{{ entity.title }}</h3>
                             <p>{{ entity.title }}</p>
