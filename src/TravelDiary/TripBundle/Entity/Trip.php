@@ -106,9 +106,13 @@ class Trip
 
     public function getWebPath()
     {
+        if (!$this->getUser()) {
+            return '';
+        }
+
         return null === $this->photo
             ? null
-            : $this->getUploadDir().'/'.$this->photo;
+            : $this->getUploadDir().'/'. $this->getUser()->getUsername() . '/' . $this->photo;
     }
 
     protected function getUploadRootDir()
