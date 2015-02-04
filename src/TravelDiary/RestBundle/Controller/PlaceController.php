@@ -27,9 +27,10 @@ class PlaceController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
 
         $trip = current($em->getRepository('TDTripBundle:Trip')->findAll());
+        $user = current($em->getRepository('TDUserBundle:User')->findAll());
 
         $entity->setTrip($trip);
-        $entity->setUser($this->getUser());
+        $entity->setUser($user);
 
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
