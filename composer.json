@@ -20,7 +20,9 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "ircmaxell/password-compat": "~1.0",
-        "miljar/php-exif": "0.*"
+        "miljar/php-exif": "0.*",
+        "friendsofsymfony/rest-bundle": "~1.5",
+        "jms/serializer-bundle": "0.13.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

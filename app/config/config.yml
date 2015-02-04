@@ -77,3 +77,17 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: TravelDiary\UserBundle\Entity\User
+
+fos_rest:
+    routing_loader:
+        default_format: json
+    view:
+        formats:
+            json: true
+            xml: false
+        templating_formats:
+            html: true
+        force_redirects:
+            html: true
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: twig

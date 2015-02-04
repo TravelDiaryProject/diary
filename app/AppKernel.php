@@ -21,6 +21,9 @@ class AppKernel extends Kernel
             new TravelDiary\DashboardBundle\TDDashboardBundle(),
             new TravelDiary\TripBundle\TDTripBundle(),
             new TravelDiary\PlaceBundle\TDPlaceBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new TravelDiary\RestBundle\TDRestBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
