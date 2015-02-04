@@ -109,6 +109,28 @@ class PlaceController extends Controller
     }
 
     /**
+     * Displays a form to create a new Place entity.
+     *
+     */
+    public function newTestAction($tripId)
+    {
+        $entity = new Place();
+        $em = $this->getDoctrine()->getManager();
+
+        $trip = $em->getRepository('TDTripBundle:Trip')->find($tripId);
+
+        $entity->setTrip($trip);
+        $entity->setUser($this->getUser());
+        $form   = $this->createCreateForm($entity);
+
+        return $this->render('TDPlaceBundle:Place:newTest.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+            'tripId' => $tripId
+        ));
+    }
+
+    /**
      * Finds and displays a Place entity.
      *
      */

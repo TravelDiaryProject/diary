@@ -3,6 +3,11 @@ td_rest:
     resource: TravelDiary\RestBundle\Controller\TripController
     prefix:   /api/v1/
 
+td_rest_place:
+    type:     rest
+    resource: TravelDiary\RestBundle\Controller\PlaceController
+    prefix:   /api/v1/
+
 td_place:
     resource: "@TDPlaceBundle/Resources/config/routing.yml"
     prefix:   /

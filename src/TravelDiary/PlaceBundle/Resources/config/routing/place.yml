@@ -10,6 +10,10 @@ trip_place_new:
     path:     /new
     defaults: { _controller: "TDPlaceBundle:Place:new" }
 
+trip_place_new_test:
+    path:     /new_test
+    defaults: { _controller: "TDPlaceBundle:Place:newTest" }
+
 trip_place_create:
     path:     /create
     defaults: { _controller: "TDPlaceBundle:Place:create" }
