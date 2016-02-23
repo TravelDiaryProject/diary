@@ -1,4 +1,6 @@
 services:
+    security.authentication_rest_handler:
+        class: TravelDiary\RestBundle\Security\AuthenticationRestHandler
 #    td_rest.example:
 #        class: TravelDiary\RestBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]

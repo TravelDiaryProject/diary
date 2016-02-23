@@ -17,6 +17,16 @@ security:
             pattern: ^/(_(profiler|wdt|error)|css|images|js)/
             security: false
 
+        rest:
+            pattern: ^/rest
+            form_login:
+                check_path: /rest/login
+                provider: fos_userbundle
+                failure_handler: security.authentication_rest_handler
+                success_handler: security.authentication_rest_handler
+                username_parameter: login
+                password_parameter: password
+
         main:
             pattern: ^/
             form_login:
