@@ -14,15 +14,19 @@ class PlaceController extends FOSRestController
     /**
      * @Rest\Get("/trip/{tripId}/places")
      *
+     * @param int $tripId
+     *
      * @return string
      */
-    public function getTripsAction()
+    public function getTripsAction($tripId)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         /** @var Place[] $data */
-        $data = $em->getRepository('TDPlaceBundle:Place')->findAll();
+        $data = $em->getRepository('TDPlaceBundle:Place')->findBy(
+            ['trip' => $tripId]
+        );
 
         $result = array();
 
