@@ -3,16 +3,44 @@
 namespace TravelDiary\RestBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Query;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 use TravelDiary\PlaceBundle\Entity\Place;
 use TravelDiary\PlaceBundle\Form\PlaceType;
-use TravelDiary\TripBundle\Entity\Trip;
 
 class PlaceController extends FOSRestController
 {
+    /**
+     * @Rest\Get("/trip/{tripId}/places")
+     *
+     * @return string
+     */
+    public function getTripsAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Place[] $data */
+        $data = $em->getRepository('TDPlaceBundle:Place')->findAll();
+
+        $result = array();
+
+        foreach ($data as $entity) {
+            $result[] = array(
+                'id'    => $entity->getId(),
+                'title' => $entity->getTitle(),
+                'photo' => $entity->getWebPath(),
+                'latitude' => $entity->getLatitude(),
+                'longitude' => $entity->getLongitude()
+            );
+        }
+
+        $view = $this->view($result, 200);
+
+        return $this->handleView($view);
+    }
+
     /**
      * @Rest\Post("/place")
      *
@@ -36,8 +64,6 @@ class PlaceController extends FOSRestController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-
-
             $em->persist($entity);
             $em->flush();
 
