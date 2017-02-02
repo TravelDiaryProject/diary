@@ -18,7 +18,7 @@ class PlaceController extends FOSRestController
      *
      * @return string
      */
-    public function getTripsAction($tripId)
+    public function getPlacesByTripIdAction($tripId)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
