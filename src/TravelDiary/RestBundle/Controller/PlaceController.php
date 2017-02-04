@@ -60,7 +60,24 @@ class PlaceController extends FOSRestController
 
         $em = $this->getDoctrine()->getManager();
 
-        $trip = current($em->getRepository('TDTripBundle:Trip')->findAll());
+        $tripId = (int) $request->request->get('tripId');
+
+        if (false === 0 < $tripId) {
+            $result = ['error' => sprintf('Trip with id %d not found', $tripId)];
+
+            $view = $this->view($result, 404);
+
+            return $this->handleView($view);
+        }
+
+        $trip = $em->getRepository('TDTripBundle:Trip')->find($tripId);
+
+        if (null === $trip) {
+            $view = $this->view(sprintf('Trip with id %d not found', $tripId), 404);
+
+            return $this->handleView($view);
+        }
+
         $user = current($em->getRepository('TDUserBundle:User')->findAll());
 
         $entity->setTrip($trip);
