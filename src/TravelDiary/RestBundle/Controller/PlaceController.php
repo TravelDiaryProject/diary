@@ -51,6 +51,8 @@ class PlaceController extends FOSRestController
      * @param Request $request
      *
      * @return string
+     *
+     * @throws \Exception
      */
     public function postPlaceAction(Request $request)
     {
@@ -65,7 +67,8 @@ class PlaceController extends FOSRestController
         $entity->setUser($user);
 
         $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
+
+        $form->submit($request);
 
         if ($form->isValid()) {
             $em->persist($entity);

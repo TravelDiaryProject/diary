@@ -5,6 +5,7 @@ namespace TravelDiary\PlaceBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use TravelDiary\PlaceBundle\Entity\Place;
 
 class PlaceType extends AbstractType
 {
@@ -27,7 +28,7 @@ class PlaceType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'TravelDiary\PlaceBundle\Entity\Place'
+            'data_class' => Place::class
         ));
     }
 
