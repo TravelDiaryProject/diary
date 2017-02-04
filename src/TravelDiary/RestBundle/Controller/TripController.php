@@ -33,7 +33,7 @@ class TripController extends FOSRestController
                 ['trip' => $trip]
             );
 
-            $photo = $place ? $place->getWebPath() : '';
+            $photo = $place ? $place->getWebPath() : '/templates/image/noimagefound.jpg';
 
             $result[] = [
                 'id'    => $trip->getId(),
