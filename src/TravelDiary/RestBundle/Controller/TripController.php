@@ -3,10 +3,10 @@
 namespace TravelDiary\RestBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Query;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
+use TravelDiary\PlaceBundle\Entity\Place;
 use TravelDiary\TripBundle\Entity\Trip;
 
 class TripController extends FOSRestController
@@ -21,17 +21,25 @@ class TripController extends FOSRestController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        /** @var Trip[] $data */
-        $data = $em->getRepository('TDTripBundle:Trip')->findAll();
+        /** @var Trip[] $trips */
+        $trips = $em->getRepository('TDTripBundle:Trip')->findAll();
 
         $result = array();
 
-        foreach ($data as & $entity) {
-            $result[] = array(
-                'id'    => $entity->getId(),
-                'title' => $entity->getTitle(),
-                'photo' => $entity->getWebPath()
+        foreach ($trips as $trip) {
+
+            /** @var Place $places */
+            $place = $em->getRepository('TDPlaceBundle:Place')->findOneBy(
+                ['trip' => $trip]
             );
+
+            $photo = $place ? $place->getWebPath() : '';
+
+            $result[] = [
+                'id'    => $trip->getId(),
+                'title' => $trip->getTitle(),
+                'photo' => $photo
+            ];
         }
 
         $view = $this->view($result, 200);
@@ -45,21 +53,31 @@ class TripController extends FOSRestController
      * @param Request $request
      *
      * @return string
+     *
+     * @throws \Exception
      */
     public function postTripAction(Request $request)
     {
-        $data = json_decode($request->getContent(), true);
+        $trip = new Trip();
+
+        $title = $request->request->get('title');
+
+        if (!$title) {
+            $result = ['error' => 'Title is required'];
+
+            $view = $this->view($result, 404);
+
+            return $this->handleView($view);
+        }
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getEntityManager();
 
         $user = current($em->getRepository('TDUserBundle:User')->findAll());
 
-        $trip = new Trip();
-
         $trip->setUser($user);
-        $trip->setTitle(!empty($data['title']) ? $data['title'] : 'empty title');
-        $trip->setDescription(!empty($data['description']) ? $data['description'] : 'empty description');
+        $trip->setTitle($title);
+        $trip->setDescription('');
 
         $em->persist($trip);
         $em->flush();
@@ -67,7 +85,6 @@ class TripController extends FOSRestController
         $result = array(
             'id'    => $trip->getId(),
             'title' => $trip->getTitle(),
-            'description' => $trip->getDescription()
         );
 
         $view = $this->view($result, 201);
