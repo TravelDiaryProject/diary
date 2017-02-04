@@ -81,7 +81,7 @@ class PlaceController extends FOSRestController
             );
         } else {
             $result = array(
-                'error' => 'form is not valid'
+                'error' => (string) $form->getErrors(true, false)
             );
         }
 
