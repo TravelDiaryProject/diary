@@ -40,6 +40,6 @@ class TripType extends AbstractType
      */
     public function getName()
     {
-        return 'traveldiary_tripbundle_trip';
+        return 'trip';
     }
 }

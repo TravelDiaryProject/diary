@@ -37,6 +37,6 @@ class PlaceType extends AbstractType
      */
     public function getName()
     {
-        return 'traveldiary_placebundle_place';
+        return 'place';
     }
 }
