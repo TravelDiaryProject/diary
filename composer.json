@@ -26,9 +26,7 @@
         "lexik/jwt-authentication-bundle": "^2.1"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3",
-        "lakion/api-test-case": "^1.1",
-        "guzzlehttp/guzzle": "^6.2"
+        "sensio/generator-bundle": "~2.3"
     },
     "scripts": {
         "post-root-package-install": [
