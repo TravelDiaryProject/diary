@@ -27,4 +27,7 @@ td_user:
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
+api_login_check:
+    path: /api/v1/login_check
+
 

@@ -78,7 +78,7 @@ class PlaceController extends FOSRestController
             return $this->handleView($view);
         }
 
-        $user = current($em->getRepository('TDUserBundle:User')->findAll());
+        $user = $this->getUser();
 
         $entity->setTrip($trip);
         $entity->setUser($user);

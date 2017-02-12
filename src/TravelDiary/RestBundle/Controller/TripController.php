@@ -73,7 +73,7 @@ class TripController extends FOSRestController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getEntityManager();
 
-        $user = current($em->getRepository('TDUserBundle:User')->findAll());
+        $user = $this->getUser();
 
         $trip->setUser($user);
         $trip->setTitle($title);

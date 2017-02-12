@@ -8,7 +8,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.6.*",
+        "symfony/symfony": "2.8.*",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
         "twig/extensions": "~1.0",
@@ -22,7 +22,10 @@
         "ircmaxell/password-compat": "~1.0",
         "miljar/php-exif": "0.*",
         "friendsofsymfony/rest-bundle": "~1.5",
-        "jms/serializer-bundle": "0.13.*"
+        "jms/serializer-bundle": "0.13.*",
+        "lexik/jwt-authentication-bundle": "^2.1",
+        "lakion/api-test-case": "^1.1",
+        "guzzlehttp/guzzle": "^6.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
