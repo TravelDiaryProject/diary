@@ -23,12 +23,12 @@
         "miljar/php-exif": "0.*",
         "friendsofsymfony/rest-bundle": "~1.5",
         "jms/serializer-bundle": "0.13.*",
-        "lexik/jwt-authentication-bundle": "^2.1",
-        "lakion/api-test-case": "^1.1",
-        "guzzlehttp/guzzle": "^6.2"
+        "lexik/jwt-authentication-bundle": "^2.1"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "lakion/api-test-case": "^1.1",
+        "guzzlehttp/guzzle": "^6.2"
     },
     "scripts": {
         "post-root-package-install": [
