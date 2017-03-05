@@ -1,0 +1,4 @@
+services:
+#    travel_diary_geo.example:
+#        class: TravelDiary\GeoBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

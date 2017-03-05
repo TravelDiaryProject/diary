@@ -1,0 +1,16 @@
+TravelDiary\GeoBundle\Entity\Country:
+    type: entity
+    table: country
+    repositoryClass: TravelDiary\GeoBundle\Entity\CountryRepository
+    id:
+        id:
+            type: bigint
+            options:
+                unsigned: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: true

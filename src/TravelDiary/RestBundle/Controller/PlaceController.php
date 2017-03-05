@@ -12,6 +12,94 @@ use TravelDiary\PlaceBundle\Form\PlaceType;
 class PlaceController extends FOSRestController
 {
     /**
+     * @Rest\Get("/places")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getAllPlacesAction(Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $cityId = (int) $request->query->get('city_id');
+
+        if (0 < $cityId) {
+            $data = $em->getRepository('TDPlaceBundle:Place')->findBy(
+                ['city' => $cityId]
+            );
+        } else {
+            /** @var Place[] $data */
+            $data = $em->getRepository('TDPlaceBundle:Place')->findAll();
+        }
+
+        $result = array();
+
+        foreach ($data as $entity) {
+            $result[] = array(
+                'id'    => $entity->getId(),
+                'title' => $entity->getTitle(),
+                'photo' => $entity->getWebPath(),
+                'latitude' => $entity->getLatitude(),
+                'longitude' => $entity->getLongitude(),
+                'cityId' => $entity->getCity() ? $entity->getCity()->getId() : ''
+            );
+        }
+
+        $view = $this->view($result, 200);
+
+        return $this->handleView($view);
+    }
+
+    /**
+     * @Rest\Get("/my/places")
+     *
+     * @param Request $request
+     *
+     * @return string
+     */
+    public function getMyPlacesAction(Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+
+        $cityId = (int) $request->query->get('city_id');
+
+        if (0 < $cityId) {
+            $data = $em->getRepository('TDPlaceBundle:Place')->findBy(
+                [
+                    'city' => $cityId,
+                    'user' => $user
+                ]
+            );
+        } else {
+            /** @var Place[] $data */
+            $data = $em->getRepository('TDPlaceBundle:Place')->findBy([
+                'user' => $user
+            ]);
+        }
+
+        $result = array();
+
+        foreach ($data as $entity) {
+            $result[] = array(
+                'id'    => $entity->getId(),
+                'title' => $entity->getTitle(),
+                'photo' => $entity->getWebPath(),
+                'latitude' => $entity->getLatitude(),
+                'longitude' => $entity->getLongitude()
+            );
+        }
+
+        $view = $this->view($result, 200);
+
+        return $this->handleView($view);
+    }
+
+    /**
      * @Rest\Get("/trip/{tripId}/places")
      *
      * @param int $tripId

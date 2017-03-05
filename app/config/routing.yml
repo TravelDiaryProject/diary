@@ -8,6 +8,16 @@ td_rest_place:
     resource: TravelDiary\RestBundle\Controller\PlaceController
     prefix:   /api/v1/
 
+td_rest_user:
+    type:     rest
+    resource: TravelDiary\RestBundle\Controller\UserController
+    prefix:   /api/v1/
+
+td_rest_geo:
+    type:     rest
+    resource: TravelDiary\RestBundle\Controller\GeoController
+    prefix:   /api/v1/
+
 td_place:
     resource: "@TDPlaceBundle/Resources/config/routing.yml"
     prefix:   /
@@ -18,10 +28,6 @@ td_trip:
 
 td_dashboard:
     resource: "@TDDashboardBundle/Resources/config/routing.yml"
-    prefix:   /
-
-td_user:
-    resource: "@FOSUserBundle/Resources/config/routing.yml"
     prefix:   /
 
 fos_user:

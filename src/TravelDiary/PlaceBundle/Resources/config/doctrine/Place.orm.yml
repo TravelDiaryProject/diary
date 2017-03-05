@@ -42,6 +42,11 @@ TravelDiary\PlaceBundle\Entity\Place:
             joinColumns:
                 trip_id:
                     referencedColumnName: id
+        city:
+            targetEntity: TravelDiary\GeoBundle\Entity\City
+            joinColumns:
+                city_id:
+                    referencedColumnName: id
     lifecycleCallbacks:
         prePersist: [ preUpload, bindDate ]
         preUpdate: [ preUpload, bindDate ]

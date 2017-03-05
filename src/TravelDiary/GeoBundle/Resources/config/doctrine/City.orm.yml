@@ -1,0 +1,29 @@
+TravelDiary\GeoBundle\Entity\City:
+    type: entity
+    table: city
+    repositoryClass: TravelDiary\GeoBundle\Entity\CityRepository
+    id:
+        id:
+            type: bigint
+            options:
+                unsigned: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: true
+        capital_longitude:
+            type: string
+            nullable: true
+        capital_latitude:
+            type: string
+            nullable: true
+    manyToOne:
+        country:
+            targetEntity: TravelDiary\GeoBundle\Entity\Country
+            joinColumns:
+                country_id:
+                    referencedColumnName: id
+

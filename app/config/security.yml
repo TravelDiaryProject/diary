@@ -25,7 +25,7 @@ security:
                 provider: fos_userbundle
 
         api:
-            pattern:   ^/api/v1
+            pattern:   ^/api/v1/my
             stateless: true
             guard:
                 authenticators:
@@ -49,5 +49,6 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/trip, role: ROLE_USER }
         - { path: ^/api/v1/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/v1,       roles: IS_AUTHENTICATED_FULLY }
+       # - { path: ^/api/v1/my$,       roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/v1,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
 

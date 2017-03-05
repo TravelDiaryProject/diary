@@ -421,4 +421,33 @@ class Place
             $this->setCreatedAt(new \DateTime());
         }
     }
+    /**
+     * @var \TravelDiary\GeoBundle\Entity\City
+     */
+    private $city;
+
+
+    /**
+     * Set city
+     *
+     * @param \TravelDiary\GeoBundle\Entity\City $city
+     *
+     * @return Place
+     */
+    public function setCity(\TravelDiary\GeoBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \TravelDiary\GeoBundle\Entity\City
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
 }

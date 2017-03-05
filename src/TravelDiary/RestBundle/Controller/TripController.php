@@ -48,6 +48,46 @@ class TripController extends FOSRestController
     }
 
     /**
+     * @Rest\Get("/my/trips")
+     *
+     * @return string
+     */
+    public function getMyTripsAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+
+        /** @var Trip[] $trips */
+        $trips = $em->getRepository('TDTripBundle:Trip')->findBy([
+            'user' => $user
+        ]);
+
+        $result = array();
+
+        foreach ($trips as $trip) {
+
+            /** @var Place $places */
+            $place = $em->getRepository('TDPlaceBundle:Place')->findOneBy(
+                ['trip' => $trip]
+            );
+
+            $photo = $place ? $place->getWebPath() : '/templates/image/noimagefound.jpg';
+
+            $result[] = [
+                'id'    => $trip->getId(),
+                'title' => $trip->getTitle(),
+                'photo' => $photo
+            ];
+        }
+
+        $view = $this->view($result, 200);
+
+        return $this->handleView($view);
+    }
+
+    /**
      * @Rest\Post("/trip")
      *
      * @param Request $request
