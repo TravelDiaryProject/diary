@@ -88,7 +88,7 @@ class TripController extends FOSRestController
     }
 
     /**
-     * @Rest\Post("/trip")
+     * @Rest\Post("/my/trip")
      *
      * @param Request $request
      *

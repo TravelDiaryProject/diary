@@ -134,7 +134,7 @@ class PlaceController extends FOSRestController
     }
 
     /**
-     * @Rest\Post("/place")
+     * @Rest\Post("/my/place")
      *
      * @param Request $request
      *
