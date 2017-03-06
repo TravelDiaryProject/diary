@@ -179,6 +179,8 @@ class PlaceController extends FOSRestController
             $em->persist($entity);
             $em->flush();
 
+            $this->get('city_resolver')->resolve($entity);
+
             $result = array(
                 'id'    => $entity->getId(),
                 'title' => $entity->getTitle(),

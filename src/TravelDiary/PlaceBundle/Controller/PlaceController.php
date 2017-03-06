@@ -52,9 +52,10 @@ class PlaceController extends Controller
 
         if ($form->isValid()) {
 
-
             $em->persist($entity);
             $em->flush();
+
+            $this->get('city_resolver')->resolve($entity);
 
             return $this->redirect($this->generateUrl('trip_place', array(
                 'tripId' => $tripId
