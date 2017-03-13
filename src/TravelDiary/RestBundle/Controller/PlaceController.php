@@ -173,7 +173,7 @@ class PlaceController extends FOSRestController
 
         $form = $this->createCreateForm($entity);
 
-        $form->handleRequest($request);
+        $form->submit($request);
 
         if ($form->isValid()) {
             $em->persist($entity);
@@ -210,8 +210,6 @@ class PlaceController extends FOSRestController
             'action' => $this->generateUrl('trip_place_create', array('tripId' => $entity->getTrip()->getId())),
             'method' => 'POST',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
