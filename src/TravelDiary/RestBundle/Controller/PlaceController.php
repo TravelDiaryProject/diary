@@ -8,11 +8,12 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 use TravelDiary\PlaceBundle\Entity\Place;
 use TravelDiary\PlaceBundle\Form\PlaceType;
+use TravelDiary\RestBundle\Representation\Place\PlaceRepresentation;
 
 class PlaceController extends FOSRestController
 {
     /**
-     * @Rest\Get("/places")
+     * @Rest\Get("/top_places")
      *
      * @param Request $request
      *
@@ -37,14 +38,7 @@ class PlaceController extends FOSRestController
         $result = array();
 
         foreach ($data as $entity) {
-            $result[] = array(
-                'id'    => $entity->getId(),
-                'title' => $entity->getTitle(),
-                'photo' => $entity->getWebPath(),
-                'latitude' => $entity->getLatitude(),
-                'longitude' => $entity->getLongitude(),
-                'cityId' => $entity->getCity() ? $entity->getCity()->getId() : ''
-            );
+            $result[] = PlaceRepresentation::listItem($entity);
         }
 
         $view = $this->view($result, 200);
@@ -85,13 +79,7 @@ class PlaceController extends FOSRestController
         $result = array();
 
         foreach ($data as $entity) {
-            $result[] = array(
-                'id'    => $entity->getId(),
-                'title' => $entity->getTitle(),
-                'photo' => $entity->getWebPath(),
-                'latitude' => $entity->getLatitude(),
-                'longitude' => $entity->getLongitude()
-            );
+            $result[] = PlaceRepresentation::listItem($entity);
         }
 
         $view = $this->view($result, 200);
@@ -119,13 +107,7 @@ class PlaceController extends FOSRestController
         $result = array();
 
         foreach ($data as $entity) {
-            $result[] = array(
-                'id'    => $entity->getId(),
-                'title' => $entity->getTitle(),
-                'photo' => $entity->getWebPath(),
-                'latitude' => $entity->getLatitude(),
-                'longitude' => $entity->getLongitude()
-            );
+            $result[] = PlaceRepresentation::listItem($entity);
         }
 
         $view = $this->view($result, 200);
@@ -181,11 +163,7 @@ class PlaceController extends FOSRestController
 
             $this->get('city_resolver')->resolve($entity);
 
-            $result = array(
-                'id'    => $entity->getId(),
-                'title' => $entity->getTitle(),
-                'description' => $entity->getDescription()
-            );
+            $result = PlaceRepresentation::listItem($entity);
         } else {
             $result = array(
                 'error' => (string) $form->getErrors(true, false)

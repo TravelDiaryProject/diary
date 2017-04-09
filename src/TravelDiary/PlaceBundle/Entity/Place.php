@@ -450,4 +450,38 @@ class Place
     {
         return $this->city;
     }
+
+    /**
+     * @return int|null
+     */
+    public function getCityId()
+    {
+        return $this->getCity() ? $this->getCity()->getId() : null;
+    }
+
+    /**
+     * @return null|\TravelDiary\GeoBundle\Entity\Country
+     */
+    public function getCountry()
+    {
+        if (null === $this->getCity()) {
+            return null;
+        }
+
+        $country = $this->getCity()->getCountry();
+
+        if (null === $country) {
+            return null;
+        }
+
+        return $country;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCountryId()
+    {
+        return $this->getCountry() ? $this->getCountry()->getId() : null;
+    }
 }
