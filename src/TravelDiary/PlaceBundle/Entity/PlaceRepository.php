@@ -12,4 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class PlaceRepository extends EntityRepository
 {
+    public function findAllTopPlaces()
+    {
+        return $this->createQueryBuilder('place')
+            ->orderBy('place.likes', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

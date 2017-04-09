@@ -484,4 +484,33 @@ class Place
     {
         return $this->getCountry() ? $this->getCountry()->getId() : null;
     }
+    /**
+     * @var integer
+     */
+    private $likes;
+
+
+    /**
+     * Set likes
+     *
+     * @param integer $likes
+     *
+     * @return Place
+     */
+    public function setLikes($likes)
+    {
+        $this->likes = $likes;
+
+        return $this;
+    }
+
+    /**
+     * Get likes
+     *
+     * @return integer
+     */
+    public function getLikes()
+    {
+        return $this->likes;
+    }
 }

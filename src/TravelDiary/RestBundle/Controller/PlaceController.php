@@ -19,7 +19,7 @@ class PlaceController extends FOSRestController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getAllPlacesAction(Request $request)
+    public function getTopPlacesAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -28,11 +28,12 @@ class PlaceController extends FOSRestController
 
         if (0 < $cityId) {
             $data = $em->getRepository('TDPlaceBundle:Place')->findBy(
-                ['city' => $cityId]
+                ['city' => $cityId],
+                ['likes' => 'DESC']
             );
         } else {
             /** @var Place[] $data */
-            $data = $em->getRepository('TDPlaceBundle:Place')->findAll();
+            $data = $em->getRepository('TDPlaceBundle:Place')->findAllTopPlaces();
         }
 
         $result = array();
@@ -67,13 +68,15 @@ class PlaceController extends FOSRestController
                 [
                     'city' => $cityId,
                     'user' => $user
-                ]
+                ],
+                ['likes' => 'DESC']
             );
         } else {
             /** @var Place[] $data */
-            $data = $em->getRepository('TDPlaceBundle:Place')->findBy([
-                'user' => $user
-            ]);
+            $data = $em->getRepository('TDPlaceBundle:Place')->findBy(
+                ['user' => $user],
+                ['likes' => 'DESC']
+            );
         }
 
         $result = array();
@@ -101,7 +104,8 @@ class PlaceController extends FOSRestController
 
         /** @var Place[] $data */
         $data = $em->getRepository('TDPlaceBundle:Place')->findBy(
-            ['trip' => $tripId]
+            ['trip' => $tripId],
+            ['likes' => 'DESC']
         );
 
         $result = array();

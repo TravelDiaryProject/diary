@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new TravelDiary\RestBundle\TDRestBundle(),
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
             new TravelDiary\GeoBundle\TDGeoBundle(),
+            new TravelDiary\RatingBundle\TDRatingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

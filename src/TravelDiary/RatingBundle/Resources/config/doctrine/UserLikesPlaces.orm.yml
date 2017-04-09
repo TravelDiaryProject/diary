@@ -1,0 +1,26 @@
+TravelDiary\RatingBundle\Entity\UserLikesPlaces:
+    type: entity
+    table: user_likes_places
+    repositoryClass: TravelDiary\RatingBundle\Entity\UserLikesPlacesRepository
+    id:
+        id:
+            type: bigint
+            options:
+                unsigned: true
+            generator:
+                strategy: AUTO
+    fields:
+        created:
+            type: date
+    manyToOne:
+        user:
+            targetEntity: TravelDiary\UserBundle\Entity\User
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+        place:
+            targetEntity: TravelDiary\PlaceBundle\Entity\Place
+            joinColumns:
+                place_id:
+                    referencedColumnName: id
+

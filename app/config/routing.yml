@@ -18,6 +18,11 @@ td_rest_geo:
     resource: TravelDiary\RestBundle\Controller\GeoController
     prefix:   /api/v1/
 
+td_rest_rating:
+    type:     rest
+    resource: TravelDiary\RestBundle\Controller\RatingController
+    prefix:   /api/v1/
+
 td_place:
     resource: "@TDPlaceBundle/Resources/config/routing.yml"
     prefix:   /

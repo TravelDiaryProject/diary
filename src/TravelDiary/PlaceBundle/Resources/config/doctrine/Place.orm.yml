@@ -31,6 +31,9 @@ TravelDiary\PlaceBundle\Entity\Place:
         latitude:
             type: string
             nullable: true
+        likes:
+            type: integer
+            nullable: true
     manyToOne:
         user:
             targetEntity: TravelDiary\UserBundle\Entity\User
