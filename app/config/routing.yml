@@ -23,6 +23,11 @@ td_rest_rating:
     resource: TravelDiary\RestBundle\Controller\RatingController
     prefix:   /api/v1/
 
+td_rest_future_trips:
+    type:     rest
+    resource: TravelDiary\RestBundle\Controller\FutureTripsController
+    prefix:   /api/v1/
+
 td_place:
     resource: "@TDPlaceBundle/Resources/config/routing.yml"
     prefix:   /

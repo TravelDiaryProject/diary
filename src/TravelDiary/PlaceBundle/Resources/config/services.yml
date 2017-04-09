@@ -6,3 +6,12 @@ services:
     city_resolver:
         class: TravelDiary\PlaceBundle\Service\Geo\CityResolver
         arguments: [@doctrine.orm.entity_manager]
+
+    trip_resolver:
+        class: TravelDiary\PlaceBundle\Service\Trip\FutureTripResolver
+        arguments: [@doctrine.orm.entity_manager]
+
+    place.future_photo.resolver:
+            class: TravelDiary\PlaceBundle\Service\Place\FuturePlacePhotoResolver
+            arguments: [@doctrine.orm.entity_manager]
+

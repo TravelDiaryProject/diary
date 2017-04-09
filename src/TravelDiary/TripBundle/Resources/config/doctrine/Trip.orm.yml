@@ -25,11 +25,20 @@ TravelDiary\TripBundle\Entity\Trip:
         photo:
             type: string
             nullable: true
+        isFuture:
+            type: boolean
+            nullable: true
+            column: is_future
     manyToOne:
         user:
             targetEntity: TravelDiary\UserBundle\Entity\User
             joinColumns:
                 user_id:
+                    referencedColumnName: id
+        city:
+            targetEntity: TravelDiary\GeoBundle\Entity\City
+            joinColumns:
+                city_id:
                     referencedColumnName: id
     lifecycleCallbacks:
         prePersist: [ preUpload, bindDate ]

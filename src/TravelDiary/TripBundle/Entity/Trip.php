@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Trip
 {
+    const UNKNOWN_CITY_NAME = 'Unknown city';
+
     private $id;
 
     private $title;
@@ -271,5 +273,63 @@ class Trip
     public function __toString()
     {
         return $this->getTitle();
+    }
+    /**
+     * @var boolean
+     */
+    private $isFuture;
+
+    /**
+     * @var \TravelDiary\GeoBundle\Entity\City
+     */
+    private $city;
+
+
+    /**
+     * Set isFuture
+     *
+     * @param boolean $isFuture
+     *
+     * @return Trip
+     */
+    public function setIsFuture($isFuture)
+    {
+        $this->isFuture = $isFuture;
+
+        return $this;
+    }
+
+    /**
+     * Get isFuture
+     *
+     * @return boolean
+     */
+    public function getIsFuture()
+    {
+        return $this->isFuture;
+    }
+
+    /**
+     * Set city
+     *
+     * @param \TravelDiary\GeoBundle\Entity\City $city
+     *
+     * @return Trip
+     */
+    public function setCity(\TravelDiary\GeoBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \TravelDiary\GeoBundle\Entity\City
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 }

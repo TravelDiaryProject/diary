@@ -255,9 +255,6 @@ class Place
         return null === $this->photo
             ? null
             : $this->getUploadRootDir() . DIRECTORY_SEPARATOR .
-              $this->getUser()->getUsername() . DIRECTORY_SEPARATOR .
-              $this->getTrip()->getId() . DIRECTORY_SEPARATOR .
-              'places' . DIRECTORY_SEPARATOR .
               $this->photo;
     }
 
