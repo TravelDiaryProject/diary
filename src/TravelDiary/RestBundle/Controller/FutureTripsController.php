@@ -95,14 +95,12 @@ class FutureTripsController extends FOSRestController
 
         $futurePlace->setTrip($futureTrip);
 
-        $em->persist($futurePlace);
-        $em->flush();
-
-        $futurePlace->setUser($place->getUser());
-
         $this->get('place.future_photo.resolver')->resolve($place, $user);
 
         $futurePlace->setUser($user);
+
+        $em->persist($futurePlace);
+        $em->flush();
 
         $result = ['success' => sprintf('Place with id %d was added to your future trips', $futurePlace->getId())];
         $view = $this->view($result, 201);
