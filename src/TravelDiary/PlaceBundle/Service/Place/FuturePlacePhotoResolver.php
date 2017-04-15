@@ -16,6 +16,8 @@ class FuturePlacePhotoResolver
         $place->setUser($user);
         $photoOfNewUser = $place->getAbsolutePath();
 
-        copy($photoOfOldUser, $photoOfNewUser);
+        $result = copy($photoOfOldUser, $photoOfNewUser);
+
+        return $result;
     }
 }

@@ -80,6 +80,7 @@ class FutureTripsController extends FOSRestController
 
         $em = $this->getDoctrine()->getManager();
 
+        /** @var Place $place */
         $place = $em->getRepository('TDPlaceBundle:Place')->find($placeId);
 
         if (null === $place) {
@@ -89,18 +90,23 @@ class FutureTripsController extends FOSRestController
             return $this->handleView($view);
         }
 
+        /** @var Place $futurePlace */
         $futurePlace = clone $place;
 
         $futureTrip = $this->get('trip_resolver')->resolve($user, $futurePlace->getCity());
 
         $futurePlace->setTrip($futureTrip);
 
-        $this->get('place.future_photo.resolver')->resolve($place, $user);
-
         $futurePlace->setUser($user);
 
         $em->persist($futurePlace);
         $em->flush();
+
+        $source = $place->getAbsolutePath();
+        $target = $futurePlace->getAbsolutePath();
+        $targetDir = dirname($target);
+
+        copy($source, $target);
 
         $result = ['success' => sprintf('Place with id %d was added to your future trips', $futurePlace->getId())];
         $view = $this->view($result, 201);
