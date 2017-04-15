@@ -106,6 +106,10 @@ class FutureTripsController extends FOSRestController
         $target = $futurePlace->getAbsolutePath();
         $targetDir = dirname($target);
 
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0644, true);
+        }
+
         copy($source, $target);
 
         $result = ['success' => sprintf('Place with id %d was added to your future trips', $futurePlace->getId())];
