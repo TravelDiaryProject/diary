@@ -42,7 +42,8 @@ class FutureTripResolver
             $trip = $this->em->getRepository('TDTripBundle:Trip')
                 ->findOneBy([
                     'city' => $city,
-                    'isFuture' => true
+                    'isFuture' => true,
+                    'user' => $user
                 ]);
 
             if (!$trip) {
