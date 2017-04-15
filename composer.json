@@ -25,7 +25,8 @@
         "jms/serializer-bundle": "0.13.*",
         "lexik/jwt-authentication-bundle": "^2.1",
         "willdurand/geocoder": "^3.3",
-        "php-http/guzzle6-adapter": "^1.1"
+        "php-http/guzzle6-adapter": "^1.1",
+        "gesdinet/jwt-refresh-token-bundle": "^0.2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

@@ -20,7 +20,9 @@ class PlaceRepresentation
             'cityId' => (int) $place->getCityId(),
             'countryId' => (int) $place->getCountryId(),
             'tripId' => (int) $place->getTrip()->getId(),
-            'likes' => (int) $place->getLikes()
+            'likes' => (int) $place->getLikes(),
+            'isLiked' => mt_rand(0, 1),
+            'isInFutureTrips' => mt_rand(0, 1),
         ];
     }
 }
