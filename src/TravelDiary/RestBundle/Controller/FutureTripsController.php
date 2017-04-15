@@ -107,7 +107,7 @@ class FutureTripsController extends FOSRestController
         $targetDir = dirname($target);
 
         if (!is_dir($targetDir)) {
-            mkdir($targetDir, 0777, true);
+            mkdir($targetDir);
         }
 
         copy($source, $target);
