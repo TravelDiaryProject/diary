@@ -5,6 +5,7 @@ namespace TravelDiary\RestBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use TravelDiary\PlaceBundle\Entity\Place;
 use TravelDiary\TripBundle\Entity\Trip;
@@ -106,11 +107,13 @@ class FutureTripsController extends FOSRestController
         $target = $futurePlace->getAbsolutePath();
         $targetDir = dirname($target);
 
-        if (!is_dir($targetDir)) {
-            mkdir($targetDir);
+        $fs = new Filesystem();
+
+        if ($fs->exists($targetDir)) {
+            $fs->mkdir($targetDir);
         }
 
-        copy($source, $target);
+        $fs->copy($source, $target, true);
 
         $result = ['success' => sprintf('Place with id %d was added to your future trips', $futurePlace->getId())];
         $view = $this->view($result, 201);
