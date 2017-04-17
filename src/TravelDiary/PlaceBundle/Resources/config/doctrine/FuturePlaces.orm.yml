@@ -1,0 +1,28 @@
+TravelDiary\PlaceBundle\Entity\FuturePlaces:
+    type: entity
+    table: future_places
+    repositoryClass: TravelDiary\PlaceBundle\Entity\FuturePlacesRepository
+    id:
+        id:
+            type: bigint
+            options:
+                unsigned: true
+            generator:
+                strategy: AUTO
+    manyToOne:
+        user:
+            targetEntity: TravelDiary\UserBundle\Entity\User
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+        futurePlace:
+            targetEntity: TravelDiary\PlaceBundle\Entity\Place
+            joinColumns:
+                future_place_id:
+                    referencedColumnName: id
+        originalPlace:
+            targetEntity: TravelDiary\PlaceBundle\Entity\Place
+            joinColumns:
+                original_place_id:
+                    referencedColumnName: id
+

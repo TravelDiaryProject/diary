@@ -9,9 +9,9 @@ use TravelDiary\PlaceBundle\Entity\Place;
  */
 class PlaceRepresentation
 {
-    public static function listItem(Place $place)
+    public static function listItem(Place $place, array $extra = [])
     {
-        return [
+        return array_merge([
             'id'    => (int) $place->getId(),
             'title' => $place->getTitle(),
             'photo' => $place->getWebPath(),
@@ -21,8 +21,6 @@ class PlaceRepresentation
             'countryId' => (int) $place->getCountryId(),
             'tripId' => (int) $place->getTrip()->getId(),
             'likes' => (int) $place->getLikes(),
-            'isLiked' => mt_rand(0, 1),
-            'isInFutureTrips' => mt_rand(0, 1),
-        ];
+        ], $extra);
     }
 }

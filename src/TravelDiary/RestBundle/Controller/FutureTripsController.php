@@ -7,6 +7,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
+use TravelDiary\PlaceBundle\Entity\FuturePlaces;
 use TravelDiary\PlaceBundle\Entity\Place;
 use TravelDiary\TripBundle\Entity\Trip;
 
@@ -91,6 +92,28 @@ class FutureTripsController extends FOSRestController
             return $this->handleView($view);
         }
 
+        /** @var FuturePlaces $place */
+        $history = $em->getRepository('TDPlaceBundle:FuturePlaces')->findOneBy(
+            ['user' => $user, 'originalPlace' => $place]
+        );
+
+        if ($history && $history->getFuturePlace() && 0 < (int) $history->getFuturePlace()->getId()) {
+            $result = [
+                'error' => sprintf('Place with id %d has already added to future trips', $placeId),
+                'futurePlaceId' => (int) $history->getFuturePlace()->getId()
+            ];
+            $view = $this->view($result, 422);
+
+            return $this->handleView($view);
+        }
+
+        if (null === $place) {
+            $result = ['error' => sprintf('Place with id %d not found', $placeId)];
+            $view = $this->view($result, 404);
+
+            return $this->handleView($view);
+        }
+
         /** @var Place $futurePlace */
         $futurePlace = clone $place;
 
@@ -114,6 +137,14 @@ class FutureTripsController extends FOSRestController
         }
 
         $fs->copy($source, $target, true);
+
+        $futurePlacesUser = new FuturePlaces();
+        $futurePlacesUser->setUser($user);
+        $futurePlacesUser->setFuturePlace($futurePlace);
+        $futurePlacesUser->setOriginalPlace($place);
+
+        $em->persist($futurePlacesUser);
+        $em->flush();
 
         $result = ['success' => sprintf('Place with id %d was added to your future trips', $futurePlace->getId())];
         $view = $this->view($result, 201);
