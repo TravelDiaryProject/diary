@@ -62,7 +62,7 @@ class TripController extends FOSRestController
         /** @var Trip[] $trips */
         $trips = $em->getRepository('TDTripBundle:Trip')->findBy([
             'user' => $user,
-            'isFuture' => false
+            'isFuture' => 0
         ]);
 
         $result = array();
