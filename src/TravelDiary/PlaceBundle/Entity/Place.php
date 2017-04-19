@@ -277,7 +277,6 @@ class Place
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
         return 'uploads/trip' . DIRECTORY_SEPARATOR .
-                $this->getUser()->getUsername() . DIRECTORY_SEPARATOR .
                 $this->getTrip()->getId() . DIRECTORY_SEPARATOR .
                 'places';
     }
