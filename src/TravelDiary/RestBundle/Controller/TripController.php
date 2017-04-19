@@ -60,7 +60,9 @@ class TripController extends FOSRestController
         $user = $this->getUser();
 
         /** @var Trip[] $trips */
-        $trips = $em->getRepository('TDTripBundle:Trip')->getMyTrips($user);
+        $trips = $em->getRepository('TDTripBundle:Trip')->findBy([
+            'user' => $user
+        ]);
 
         $result = array();
 
