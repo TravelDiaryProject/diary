@@ -3,6 +3,7 @@
 namespace TravelDiary\TripBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use FOS\UserBundle\Model\UserInterface;
 
 /**
  * TripRepository
@@ -12,4 +13,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class TripRepository extends EntityRepository
 {
+    public function getMyTrips(UserInterface $user)
+    {
+        return $this->createQueryBuilder('trip')
+            ->where('trip.user = :user')
+            ->andWhere('trip.isFuture <> 1')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
 }
