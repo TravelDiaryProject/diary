@@ -186,7 +186,6 @@ class PlaceController extends FOSRestController
         $form = $this->createCreateForm($place);
 
         $form->handleRequest($request);
-        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em->persist($place);
