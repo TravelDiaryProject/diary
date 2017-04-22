@@ -132,11 +132,13 @@ class FutureTripsController extends FOSRestController
 
         $fs = new Filesystem();
 
-        if ($fs->exists($targetDir)) {
+        if (!$fs->exists($targetDir)) {
             $fs->mkdir($targetDir);
         }
 
         $fs->copy($source, $target, true);
+
+        $this->get('place.thumbnail_creator')->create($futurePlace);
 
         $futurePlacesUser = new FuturePlaces();
         $futurePlacesUser->setUser($user);

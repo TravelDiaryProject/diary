@@ -110,4 +110,3 @@ class FuturePlaces
         return $this->originalPlace;
     }
 }
-

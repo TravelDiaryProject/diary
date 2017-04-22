@@ -15,12 +15,14 @@ TravelDiary\RatingBundle\Entity\UserLikesPlaces:
     manyToOne:
         user:
             targetEntity: TravelDiary\UserBundle\Entity\User
-            joinColumns:
-                user_id:
-                    referencedColumnName: id
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                onDelete: CASCADE
         place:
             targetEntity: TravelDiary\PlaceBundle\Entity\Place
-            joinColumns:
-                place_id:
-                    referencedColumnName: id
+            joinColumn:
+                name: place_id
+                referencedColumnName: id
+                onDelete: CASCADE
 

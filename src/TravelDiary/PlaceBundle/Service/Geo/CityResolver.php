@@ -47,6 +47,7 @@ class CityResolver
 
             $cityName = $geoRecord->getLocality();
             $countryName = $geoRecord->getCountry()->getName();
+            $placeTitle = $geoRecord->getStreetName() . ' ' . $geoRecord->getStreetNumber();
 
             $country = $this->em->getRepository('TDGeoBundle:Country')->findOneBy(
                 ['name' => $countryName]
@@ -66,7 +67,7 @@ class CityResolver
 
             if (null === $city) {
                 $city = new City();
-                $city->setName($countryName);
+                $city->setName($cityName);
             }
 
             if (null === $city->getCountry()) {
@@ -85,6 +86,7 @@ class CityResolver
             $this->em->flush();
 
             $place->setCity($city);
+            $place->setTitle($placeTitle);
 
             $this->em->persist($place);
             $this->em->flush();

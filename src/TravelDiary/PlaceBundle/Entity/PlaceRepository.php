@@ -12,9 +12,25 @@ use Doctrine\ORM\EntityRepository;
  */
 class PlaceRepository extends EntityRepository
 {
-    public function findAllTopPlaces()
+    public function findByCityIdAndUser($cityId = null, $user = null)
     {
-        return $this->createQueryBuilder('place')
+        $q = $this->createQueryBuilder('place')
+            ->leftJoin('place.trip', 'trip')
+            ->where('trip.isFuture IS NULL');
+
+        if (0 < (int) $cityId) {
+            $q
+                ->andWhere('place.city = :cityId')
+                ->setParameter('cityId', $cityId);
+        }
+
+        if (null !== $user) {
+            $q
+                ->andWhere('place.user = :user')
+                ->setParameter('user', $user);
+        }
+
+        return $q
             ->orderBy('place.likes', 'DESC')
             ->getQuery()
             ->getResult();

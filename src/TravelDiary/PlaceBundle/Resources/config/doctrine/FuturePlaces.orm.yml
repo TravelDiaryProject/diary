@@ -12,17 +12,20 @@ TravelDiary\PlaceBundle\Entity\FuturePlaces:
     manyToOne:
         user:
             targetEntity: TravelDiary\UserBundle\Entity\User
-            joinColumns:
-                user_id:
-                    referencedColumnName: id
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                onDelete: CASCADE
         futurePlace:
             targetEntity: TravelDiary\PlaceBundle\Entity\Place
-            joinColumns:
-                future_place_id:
-                    referencedColumnName: id
+            joinColumn:
+                name: future_place_id
+                referencedColumnName: id
+                onDelete: CASCADE
         originalPlace:
             targetEntity: TravelDiary\PlaceBundle\Entity\Place
-            joinColumns:
-                original_place_id:
-                    referencedColumnName: id
+            joinColumn:
+                name: original_place_id
+                referencedColumnName: id
+                onDelete: CASCADE
 

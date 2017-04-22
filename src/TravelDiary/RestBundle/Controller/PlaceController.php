@@ -29,15 +29,7 @@ class PlaceController extends FOSRestController
 
         $cityId = (int) $request->query->get('city_id');
 
-        if (0 < $cityId) {
-            $data = $em->getRepository('TDPlaceBundle:Place')->findBy(
-                ['city' => $cityId],
-                ['likes' => 'DESC']
-            );
-        } else {
-            /** @var Place[] $data */
-            $data = $em->getRepository('TDPlaceBundle:Place')->findAllTopPlaces();
-        }
+        $data = $em->getRepository('TDPlaceBundle:Place')->findByCityIdAndUser($cityId, null);
 
         $user = $this->getUserFromRequest($request);
 
@@ -64,21 +56,7 @@ class PlaceController extends FOSRestController
 
         $cityId = (int) $request->query->get('city_id');
 
-        if (0 < $cityId) {
-            $data = $em->getRepository('TDPlaceBundle:Place')->findBy(
-                [
-                    'city' => $cityId,
-                    'user' => $user
-                ],
-                ['likes' => 'DESC']
-            );
-        } else {
-            /** @var Place[] $data */
-            $data = $em->getRepository('TDPlaceBundle:Place')->findBy(
-                ['user' => $user],
-                ['likes' => 'DESC']
-            );
-        }
+        $data = $em->getRepository('TDPlaceBundle:Place')->findByCityIdAndUser($cityId, $user);
 
         $places = $this->createPlacesList($data, $user);
 
@@ -115,6 +93,59 @@ class PlaceController extends FOSRestController
     }
 
     /**
+     * @Rest\Post("/my/place/remove")
+     *
+     * @param Request $request
+     *
+     * @return string
+     *
+     * @throws \Exception
+     */
+    public function postPlaceRemoveAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $placeId = (int) $request->request->get('placeId');
+
+        if (false === 0 < $placeId) {
+            $result = ['error' => sprintf('Place with id %d not found', $placeId)];
+
+            $view = $this->view($result, 404);
+
+            return $this->handleView($view);
+        }
+
+        $place = $em->getRepository('TDPlaceBundle:Place')->find($placeId);
+
+        if (null === $place) {
+            $result = ['error' => sprintf('Place with id %d not found', $placeId)];
+            $view = $this->view($result, 404);
+
+            return $this->handleView($view);
+        }
+
+        $user = $this->getUser();
+
+        if ($user !== $place->getUser()) {
+            $result = ['error' => sprintf('Place with id %d not found', $placeId)];
+            $view = $this->view($result, 422);
+
+            return $this->handleView($view);
+        }
+
+        $em->remove($place);
+        $em->flush();
+
+        $result = array(
+            'success' => 'Place was removed successfully'
+        );
+
+        $view = $this->view($result, 201);
+
+        return $this->handleView($view);
+    }
+
+    /**
      * @Rest\Post("/my/place")
      *
      * @param Request $request
@@ -125,7 +156,7 @@ class PlaceController extends FOSRestController
      */
     public function postPlaceAction(Request $request)
     {
-        $entity = new Place();
+        $place = new Place();
 
         $em = $this->getDoctrine()->getManager();
 
@@ -149,20 +180,25 @@ class PlaceController extends FOSRestController
 
         $user = $this->getUser();
 
-        $entity->setTrip($trip);
-        $entity->setUser($user);
+        $place->setTrip($trip);
+        $place->setUser($user);
 
-        $form = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($place);
 
+        $form->handleRequest($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em->persist($entity);
+            $em->persist($place);
             $em->flush();
 
-            $this->get('city_resolver')->resolve($entity);
+            $this->get('place.coordinates_resolver')->resolve($place);
 
-            $result = PlaceRepresentation::listItem($entity);
+            $this->get('place.thumbnail_creator')->create($place);
+
+            $this->get('city_resolver')->resolve($place);
+
+            $result = PlaceRepresentation::listItem($place);
         } else {
             $result = array(
                 'error' => (string) $form->getErrors(true, false)

@@ -22,6 +22,10 @@ TravelDiary\PlaceBundle\Entity\Place:
             type: datetime
             nullable: true
             column: created_at
+        shootedAt:
+            type: datetime
+            nullable: true
+            column: shooted_at
         photo:
             type: string
             nullable: true

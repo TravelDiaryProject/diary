@@ -3,6 +3,7 @@
 namespace TravelDiary\PlaceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -55,6 +56,15 @@ class Place
      */
     private $trip;
 
+    /**
+     * @var
+     */
+    private $file;
+
+    /**
+     * @var \TravelDiary\GeoBundle\Entity\City
+     */
+    private $city;
 
     /**
      * Get id
@@ -250,6 +260,9 @@ class Place
         return $this->trip;
     }
 
+
+
+
     public function getAbsolutePath()
     {
         return null === $this->photo
@@ -258,11 +271,26 @@ class Place
               $this->photo;
     }
 
+    public function getAbsolutePathThumbnail()
+    {
+        return null === $this->photo
+            ? null
+            : $this->getUploadDirOfThumbnail() . DIRECTORY_SEPARATOR .
+            $this->photo;
+    }
+
     public function getWebPath()
     {
         return null === $this->photo
             ? null
             : $this->getUploadDir().'/'.$this->photo;
+    }
+
+    public function getWebPathThumbnail()
+    {
+        return null === $this->photo
+            ? null
+            : $this->getUploadDirOfThumbnail().'/'.$this->photo;
     }
 
     protected function getUploadRootDir()
@@ -274,14 +302,17 @@ class Place
 
     protected function getUploadDir()
     {
-        // get rid of the __DIR__ so it doesn't screw up
-        // when displaying uploaded doc/image in the view.
         return 'uploads/trip' . DIRECTORY_SEPARATOR .
                 $this->getTrip()->getId() . DIRECTORY_SEPARATOR .
-                'places';
+                'places' . DIRECTORY_SEPARATOR .
+                $this->getId();
     }
 
-    private $file;
+    protected function getUploadDirOfThumbnail()
+    {
+        return $this->getUploadDir() . DIRECTORY_SEPARATOR .
+               'thumbnail';
+    }
 
     /**
      * Get file.
@@ -299,16 +330,6 @@ class Place
             return;
         }
 
-        // if there is an error when moving the file, an exception will
-        // be automatically thrown by move(). This will properly prevent
-        // the entity from being persisted to the database on error
-        //$reader = \PHPExif\Reader::factory(\PHPExif\Reader::TYPE_NATIVE);
-
-        // reader with Exiftool adapter
-        //$reader = \PHPExif\Reader::factory(\PHPExif\Reader::TYPE_EXIFTOOL);
-
-        //$exif = $reader->getExifFromFile($this->getFile()->getPathname());
-
         $this->getFile()->move(
             $this->getUploadRootDir(),
             $this->photo
@@ -322,50 +343,6 @@ class Place
             $this->temp = null;
         }
         $this->file = null;
-    }
-
-    public function read_gps_location($file){
-        if (is_file($file)) {
-            $info = exif_read_data($file);
-            if (isset($info['GPSLatitude']) && isset($info['GPSLongitude']) &&
-                isset($info['GPSLatitudeRef']) && isset($info['GPSLongitudeRef']) &&
-                in_array($info['GPSLatitudeRef'], array('E','W','N','S')) && in_array($info['GPSLongitudeRef'], array('E','W','N','S'))) {
-
-                $GPSLatitudeRef  = strtolower(trim($info['GPSLatitudeRef']));
-                $GPSLongitudeRef = strtolower(trim($info['GPSLongitudeRef']));
-
-                $lat_degrees_a = explode('/',$info['GPSLatitude'][0]);
-                $lat_minutes_a = explode('/',$info['GPSLatitude'][1]);
-                $lat_seconds_a = explode('/',$info['GPSLatitude'][2]);
-                $lng_degrees_a = explode('/',$info['GPSLongitude'][0]);
-                $lng_minutes_a = explode('/',$info['GPSLongitude'][1]);
-                $lng_seconds_a = explode('/',$info['GPSLongitude'][2]);
-
-                $lat_degrees = $lat_degrees_a[0] / $lat_degrees_a[1];
-                $lat_minutes = $lat_minutes_a[0] / $lat_minutes_a[1];
-                $lat_seconds = $lat_seconds_a[0] / $lat_seconds_a[1];
-                $lng_degrees = $lng_degrees_a[0] / $lng_degrees_a[1];
-                $lng_minutes = $lng_minutes_a[0] / $lng_minutes_a[1];
-                $lng_seconds = $lng_seconds_a[0] / $lng_seconds_a[1];
-
-                $lat = (float) $lat_degrees+((($lat_minutes*60)+($lat_seconds))/3600);
-                $lng = (float) $lng_degrees+((($lng_minutes*60)+($lng_seconds))/3600);
-
-                //If the latitude is South, make it negative.
-                //If the longitude is west, make it negative
-                $GPSLatitudeRef  == 's' ? $lat *= -1 : '';
-                $GPSLongitudeRef == 'w' ? $lng *= -1 : '';
-
-                return array(
-                    'lat' => $lat,
-                    'lng' => $lng
-                );
-            }
-        }
-        return array(
-            'lat' => '',
-            'lng' => ''
-        );
     }
 
     private $temp;
@@ -394,19 +371,17 @@ class Place
             // do whatever you want to generate a unique name
             $filename = sha1(uniqid(mt_rand(), true));
             $this->photo = $filename.'.'.$this->getFile()->guessExtension();
-
-            $geo = $this->read_gps_location($this->getFile()->getPathname());
-
-            $this->setLatitude($geo['lat']);
-            $this->setLongitude($geo['lng']);
         }
     }
 
     public function removeUpload()
     {
-        $file = $this->getAbsolutePath();
-        if ($file && file_exists($file)) {
-            unlink($file);
+        $fs = new Filesystem();
+
+        $targetDir = dirname($this->getAbsolutePath());
+
+        if ($fs->exists($targetDir)) {
+            $fs->remove($targetDir);
         }
     }
 
@@ -417,11 +392,6 @@ class Place
             $this->setCreatedAt(new \DateTime());
         }
     }
-    /**
-     * @var \TravelDiary\GeoBundle\Entity\City
-     */
-    private $city;
-
 
     /**
      * Set city
@@ -508,5 +478,34 @@ class Place
     public function getLikes()
     {
         return $this->likes;
+    }
+    /**
+     * @var \DateTime
+     */
+    private $shootedAt;
+
+
+    /**
+     * Set shootedAt
+     *
+     * @param \DateTime $shootedAt
+     *
+     * @return Place
+     */
+    public function setShootedAt($shootedAt)
+    {
+        $this->shootedAt = $shootedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get shootedAt
+     *
+     * @return \DateTime
+     */
+    public function getShootedAt()
+    {
+        return $this->shootedAt;
     }
 }
