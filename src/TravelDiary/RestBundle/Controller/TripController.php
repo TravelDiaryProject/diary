@@ -34,11 +34,13 @@ class TripController extends FOSRestController
             );
 
             $photo = $place ? $place->getWebPath() : '/templates/image/noimagefound.jpg';
+            $thumbnail = $place ? $place->getWebPathThumbnail() : '/templates/image/noimagefound.jpg';
 
             $result[] = [
                 'id'    => $trip->getId(),
                 'title' => $trip->getTitle(),
-                'photo' => $photo
+                'photo' => $photo,
+                'thumbnail' => $thumbnail
             ];
         }
 
@@ -74,11 +76,13 @@ class TripController extends FOSRestController
             );
 
             $photo = $place ? $place->getWebPath() : '/templates/image/noimagefound.jpg';
+            $thumbnail = $place ? $place->getWebPathThumbnail() : '/templates/image/noimagefound.jpg';
 
             $result[] = [
                 'id'    => $trip->getId(),
                 'title' => $trip->getTitle(),
-                'photo' => $photo
+                'photo' => $photo,
+                'thumbnail' => $thumbnail
             ];
         }
 
