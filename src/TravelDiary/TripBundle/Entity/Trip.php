@@ -332,4 +332,50 @@ class Trip
     {
         return $this->city;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $places;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->places = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add place
+     *
+     * @param \TravelDiary\PlaceBundle\Entity\Place $place
+     *
+     * @return Trip
+     */
+    public function addPlace(\TravelDiary\PlaceBundle\Entity\Place $place)
+    {
+        $this->places[] = $place;
+
+        return $this;
+    }
+
+    /**
+     * Remove place
+     *
+     * @param \TravelDiary\PlaceBundle\Entity\Place $place
+     */
+    public function removePlace(\TravelDiary\PlaceBundle\Entity\Place $place)
+    {
+        $this->places->removeElement($place);
+    }
+
+    /**
+     * Get places
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlaces()
+    {
+        return $this->places;
+    }
 }

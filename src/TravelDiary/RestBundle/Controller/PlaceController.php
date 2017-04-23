@@ -127,7 +127,7 @@ class PlaceController extends FOSRestController
         $user = $this->getUser();
 
         if ($user !== $place->getUser()) {
-            $result = ['error' => sprintf('Place with id %d not found', $placeId)];
+            $result = ['error' => 'You can remove only your places'];
             $view = $this->view($result, 422);
 
             return $this->handleView($view);

@@ -40,6 +40,11 @@ TravelDiary\TripBundle\Entity\Trip:
             joinColumns:
                 city_id:
                     referencedColumnName: id
+    oneToMany:
+        places:
+          targetEntity: TravelDiary\PlaceBundle\Entity\Place
+          mappedBy: trip
+          cascade: ["remove"]
     lifecycleCallbacks:
         prePersist: [ preUpload, bindDate ]
         preUpdate: [ preUpload, bindDate ]

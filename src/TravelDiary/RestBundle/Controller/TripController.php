@@ -88,6 +88,59 @@ class TripController extends FOSRestController
     }
 
     /**
+     * @Rest\Post("/my/trip/remove")
+     *
+     * @param Request $request
+     *
+     * @return string
+     *
+     * @throws \Exception
+     */
+    public function postTripRemoveAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $tripId = (int) $request->request->get('tripId');
+
+        if (false === 0 < $tripId) {
+            $result = ['error' => sprintf('Trip with id %d not found', $tripId)];
+
+            $view = $this->view($result, 404);
+
+            return $this->handleView($view);
+        }
+
+        $trip = $em->getRepository('TDTripBundle:Trip')->find($tripId);
+
+        if (null === $trip) {
+            $result = ['error' => sprintf('Trip with id %d not found', $tripId)];
+            $view = $this->view($result, 404);
+
+            return $this->handleView($view);
+        }
+
+        $user = $this->getUser();
+
+        if ($user !== $trip->getUser()) {
+            $result = ['error' => 'You can remove only your trips'];
+            $view = $this->view($result, 422);
+
+            return $this->handleView($view);
+        }
+
+        $em->remove($trip);
+        $em->flush();
+
+        $result = array(
+            'success' => 'Trip was removed successfully'
+        );
+
+        $view = $this->view($result, 201);
+
+        return $this->handleView($view);
+    }
+
+    /**
      * @Rest\Post("/my/trip")
      *
      * @param Request $request
