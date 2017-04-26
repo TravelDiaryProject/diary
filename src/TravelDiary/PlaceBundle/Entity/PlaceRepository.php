@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class PlaceRepository extends EntityRepository
 {
-    public function findByCityIdAndUser($cityId = null, $user = null)
+    public function findByCityIdAndUser($cityId = null, $user = null, $limit = null, $offset = null)
     {
         $q = $this->createQueryBuilder('place')
             ->leftJoin('place.trip', 'trip')
@@ -30,8 +30,16 @@ class PlaceRepository extends EntityRepository
                 ->setParameter('user', $user);
         }
 
+        $q
+            ->orderBy('place.likes', 'DESC');
+
+        if (0 < (int) $limit && 0 <= (int) $offset) {
+            $q
+                ->setFirstResult((int) $offset)
+                ->setMaxResults((int) $limit);
+        }
+
         return $q
-            ->orderBy('place.likes', 'DESC')
             ->getQuery()
             ->getResult();
     }

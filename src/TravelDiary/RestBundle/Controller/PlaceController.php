@@ -29,7 +29,8 @@ class PlaceController extends FOSRestController
 
         $cityId = (int) $request->query->get('city_id');
 
-        $data = $em->getRepository('TDPlaceBundle:Place')->findByCityIdAndUser($cityId, null);
+        $data = $em->getRepository('TDPlaceBundle:Place')
+            ->findByCityIdAndUser($cityId, null, $request->query->get('limit'), $request->query->get('offset'));
 
         $user = $this->getUserFromRequest($request);
 
