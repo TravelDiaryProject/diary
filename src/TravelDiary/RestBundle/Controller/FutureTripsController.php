@@ -9,6 +9,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use TravelDiary\PlaceBundle\Entity\FuturePlaces;
 use TravelDiary\PlaceBundle\Entity\Place;
+use TravelDiary\RestBundle\Representation\Trip\TripRepresentation;
 use TravelDiary\TripBundle\Entity\Trip;
 
 /**
@@ -38,18 +39,7 @@ class FutureTripsController extends FOSRestController
 
         foreach ($trips as $trip) {
 
-            /** @var Place $places */
-            $place = $em->getRepository('TDPlaceBundle:Place')->findOneBy(
-                ['trip' => $trip]
-            );
-
-            $photo = $place ? $place->getWebPath() : '/templates/image/noimagefound.jpg';
-
-            $result[] = [
-                'id'    => $trip->getId(),
-                'title' => $trip->getTitle(),
-                'photo' => $photo
-            ];
+            $result[] = TripRepresentation::listItem($trip, $user);
         }
 
         $view = $this->view($result, 200);

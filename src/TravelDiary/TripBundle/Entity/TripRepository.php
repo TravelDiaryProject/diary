@@ -13,11 +13,16 @@ use FOS\UserBundle\Model\UserInterface;
  */
 class TripRepository extends EntityRepository
 {
+    /**
+     * @param UserInterface $user
+     *
+     * @return Trip[]
+     */
     public function getMyTrips(UserInterface $user)
     {
         return $this->createQueryBuilder('trip')
             ->where('trip.user = :user')
-            ->andWhere('trip.isFuture <> 1')
+            ->andWhere('trip.isFuture IS NULL')
             ->setParameter('user', $user)
             ->getQuery()
             ->getResult();
