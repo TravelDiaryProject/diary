@@ -32,7 +32,7 @@ class PlaceController extends FOSRestController
         $data = $em->getRepository('TDPlaceBundle:Place')
             ->findByCityIdAndUser($cityId, null, $request->query->get('limit'), $request->query->get('offset'));
 
-        $user = $this->getUserFromRequest($request);
+        $user = $this->get('user_by_request_resolver')->resolve($request);
 
         $places = $this->createPlacesList($data, $user);
 
@@ -84,7 +84,7 @@ class PlaceController extends FOSRestController
             ['likes' => 'DESC']
         );
 
-        $user = $this->getUserFromRequest($this->getRequest());
+        $user = $this->get('user_by_request_resolver')->resolve($this->getRequest());
 
         $places = $this->createPlacesList($data, $user);
 
@@ -208,30 +208,6 @@ class PlaceController extends FOSRestController
         $view = $this->view($result, 201);
 
         return $this->handleView($view);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return \FOS\UserBundle\Model\UserInterface
-     *
-     * @throws \Exception
-     */
-    private function getUserFromRequest(Request $request)
-    {
-        try {
-            $payload = $this->get('lexik_jwt_authentication.encoder')
-                ->decode(
-                    $this->get('lexik_jwt_authentication.extractor.authorization_header_extractor')
-                        ->extract($request)
-                );
-
-            $user = $this->get('fos_user.user_manager')->findUserByUsername($payload['username']);
-        } catch (\Exception $e) {
-            $user = null;
-        }
-
-        return $user;
     }
 
     /**

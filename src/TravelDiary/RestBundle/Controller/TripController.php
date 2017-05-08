@@ -12,6 +12,47 @@ use TravelDiary\TripBundle\Entity\Trip;
 class TripController extends FOSRestController
 {
     /**
+     * @Rest\Get("/trip/{tripId}")
+     *
+     * @param int $tripId
+     *
+     * @return string
+     *
+     * @throws \Exception
+     */
+    public function getTripAction($tripId)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        if (false === 0 < $tripId) {
+            $result = ['error' => sprintf('Trip with id %d not found', $tripId)];
+
+            $view = $this->view($result, 404);
+
+            return $this->handleView($view);
+        }
+
+        $trip = $em->getRepository('TDTripBundle:Trip')->find($tripId);
+
+        if (null === $trip) {
+            $result = ['error' => sprintf('Trip with id %d not found', $tripId)];
+            $view = $this->view($result, 404);
+
+            return $this->handleView($view);
+        }
+
+        $result = TripRepresentation::listItem(
+            $trip,
+            $this->get('user_by_request_resolver')->resolve($this->getRequest())
+        );
+
+        $view = $this->view($result, 200);
+
+        return $this->handleView($view);
+    }
+
+    /**
      * @Rest\Get("/my/trips")
      *
      * @return string

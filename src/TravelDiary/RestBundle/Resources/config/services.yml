@@ -1,6 +1,8 @@
 services:
     security.authentication_rest_handler:
         class: TravelDiary\RestBundle\Security\AuthenticationRestHandler
-#    td_rest.example:
-#        class: TravelDiary\RestBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+
+    user_by_request_resolver:
+        class: TravelDiary\RestBundle\Service\User\UserByRequestResolver
+        calls:
+            - [setContainer, ['@service_container']]

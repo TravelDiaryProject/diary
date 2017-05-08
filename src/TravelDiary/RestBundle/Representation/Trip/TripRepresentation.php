@@ -11,7 +11,7 @@ use TravelDiary\TripBundle\Entity\Trip;
  */
 class TripRepresentation
 {
-    public static function listItem(Trip $trip, UserInterface $user)
+    public static function listItem(Trip $trip, UserInterface $user = null)
     {
         /** @var Place[] $places */
         $place = $trip->getPlaces()->first();
@@ -24,7 +24,7 @@ class TripRepresentation
             'title' => $trip->getTitle(),
             'photo' => $photo,
             'thumbnail' => $thumbnail,
-            'isMine' => (int) ($user->getId() === $trip->getUser()->getId()),
+            'isMine' => $user ? (int) ($user->getId() === $trip->getUser()->getId()) : 0,
             'isFuture' => (int) $trip->getIsFuture()
         ];
     }
