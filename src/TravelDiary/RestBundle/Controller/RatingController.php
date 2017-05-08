@@ -78,4 +78,66 @@ class RatingController extends FOSRestController
 
         return $this->handleView($view);
     }
+
+    /**
+     * @Rest\Post("/my/unlike")
+     *
+     * @param Request $request
+     *
+     * @return string
+     *
+     * @throws \Exception
+     */
+    public function unlikeAction(Request $request)
+    {
+        $user = $this->getUser();
+
+        $placeId = (int) $request->request->get('placeId');
+
+        if (false === 0 < $placeId) {
+            $result = ['error' => sprintf('Place with id %d not found', $placeId)];
+
+            $view = $this->view($result, 404);
+
+            return $this->handleView($view);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $place = $em->getRepository('TDPlaceBundle:Place')->find($placeId);
+
+        if (null === $place) {
+            $result = ['error' => sprintf('Place with id %d not found', $placeId)];
+            $view = $this->view($result, 404);
+
+            return $this->handleView($view);
+        }
+
+        $userLike = $em->getRepository('TDRatingBundle:UserLikesPlaces')
+            ->findOneBy([
+                'user' => $user,
+                'place' => $place
+            ]);
+
+        if (!$userLike) {
+            $result = ['error' => sprintf("User didn't like place with id %d", $placeId)];
+            $view = $this->view($result, 422);
+
+            return $this->handleView($view);
+        }
+
+        $em->remove($userLike);
+
+        $place->setLikes($place->getLikes() - 1);
+
+        $em->persist($place);
+
+        $em->flush();
+
+        $result = ['result' => 'success'];
+
+        $view = $this->view($result, 201);
+
+        return $this->handleView($view);
+    }
 }
