@@ -426,6 +426,14 @@ class Place
     }
 
     /**
+     * @return string
+     */
+    public function getCityName()
+    {
+        return $this->getCity() ? $this->getCity()->getName() : '';
+    }
+
+    /**
      * @return null|\TravelDiary\GeoBundle\Entity\Country
      */
     public function getCountry()
@@ -449,6 +457,14 @@ class Place
     public function getCountryId()
     {
         return $this->getCountry() ? $this->getCountry()->getId() : null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCountryName()
+    {
+        return $this->getCountry() ? $this->getCountry()->getName() : '';
     }
     /**
      * @var integer

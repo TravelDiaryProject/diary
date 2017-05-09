@@ -198,6 +198,14 @@ class PlaceController extends FOSRestController
 
             $this->get('city_resolver')->resolve($place);
 
+            $tripOverview = $this->get('trip_overview_resolver')->resolve($trip);
+
+            if ($tripOverview) {
+                $trip->setDescription($tripOverview);
+                $em->persist($trip);
+                $em->flush();
+            }
+
             $result = PlaceRepresentation::listItem($place);
         } else {
             $result = array(

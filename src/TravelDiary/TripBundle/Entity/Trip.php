@@ -5,6 +5,7 @@ namespace TravelDiary\TripBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use TravelDiary\PlaceBundle\Entity\Place;
 
 class Trip
 {
@@ -372,7 +373,7 @@ class Trip
     /**
      * Get places
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection|Place[]
      */
     public function getPlaces()
     {

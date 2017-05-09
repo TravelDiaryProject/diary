@@ -20,7 +20,9 @@ class PlaceRepresentation
             'longitude' => $place->getLongitude(),
             'shootedAt' => $place->getShootedAt() ? $place->getShootedAt()->format('U') : '',
             'cityId' => (int) $place->getCityId(),
+            'cityName' => $place->getCityName(),
             'countryId' => (int) $place->getCountryId(),
+            'countryName' => $place->getCountryName(),
             'tripId' => (int) $place->getTrip()->getId(),
             'likes' => (int) $place->getLikes(),
         ], $extra);

@@ -1,20 +1,32 @@
 services:
     city_resolver:
         class: TravelDiary\PlaceBundle\Service\Geo\CityResolver
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: ['@doctrine.orm.entity_manager']
 
     trip_resolver:
         class: TravelDiary\PlaceBundle\Service\Trip\FutureTripResolver
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: ['@doctrine.orm.entity_manager']
 
     place.future_photo.resolver:
         class: TravelDiary\PlaceBundle\Service\Place\FuturePlacePhotoResolver
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: ['@doctrine.orm.entity_manager']
 
     place.coordinates_resolver:
         class: TravelDiary\PlaceBundle\Service\Geo\CoordinatesResolver
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: ['@doctrine.orm.entity_manager']
 
     place.thumbnail_creator:
         class: TravelDiary\PlaceBundle\Service\Place\ThumbnailCreator
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: ['@doctrine.orm.entity_manager']
+
+    trip_overview_resolver:
+        class: TravelDiary\PlaceBundle\Service\Trip\TripOverviewResolver
+        arguments: ['@trip_overview_geo_resolver', '@trip_overview_dates_resolver']
+
+    trip_overview_geo_resolver:
+        class: TravelDiary\PlaceBundle\Service\Trip\TripOverviewGeoResolver
+        arguments: ['@doctrine.orm.entity_manager']
+
+    trip_overview_dates_resolver:
+        class: TravelDiary\PlaceBundle\Service\Trip\TripOverviewDatesResolver
+        arguments: ['@doctrine.orm.entity_manager']

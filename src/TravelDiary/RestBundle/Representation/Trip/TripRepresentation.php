@@ -22,6 +22,7 @@ class TripRepresentation
         return [
             'id'    => (int) $trip->getId(),
             'title' => $trip->getTitle(),
+            'description' => $trip->getDescription() ?: '',
             'photo' => $photo,
             'thumbnail' => $thumbnail,
             'isMine' => $user ? (int) ($user->getId() === $trip->getUser()->getId()) : 0,
