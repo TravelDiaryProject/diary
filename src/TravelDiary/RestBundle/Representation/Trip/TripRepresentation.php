@@ -26,7 +26,8 @@ class TripRepresentation
             'photo' => $photo,
             'thumbnail' => $thumbnail,
             'isMine' => $user ? (int) ($user->getId() === $trip->getUser()->getId()) : 0,
-            'isFuture' => (int) $trip->getIsFuture()
+            'isFuture' => (int) $trip->getIsFuture(),
+            'startDate' => $trip->getStartDate() ? $trip->getStartDate()->format('U') : ""
         ];
     }
 }

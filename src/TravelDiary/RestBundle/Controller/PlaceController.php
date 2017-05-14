@@ -81,7 +81,7 @@ class PlaceController extends FOSRestController
         /** @var Place[] $data */
         $data = $em->getRepository('TDPlaceBundle:Place')->findBy(
             ['trip' => $tripId],
-            ['likes' => 'DESC']
+            ['shootedAt' => 'ASC']
         );
 
         $user = $this->get('user_by_request_resolver')->resolve($this->getRequest());
